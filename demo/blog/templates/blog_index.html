@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Blog index</title>
+  </head>
+  <body>
+    <h1>Posts:</h1>
+    <ul>
+      {% for post in posts_list %}
+        <li>{{ post.title }} ({{ post.published_at }}</li>      
+      {% endfor %}
+    </ul>
+  </body>
+</html>
