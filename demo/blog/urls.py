@@ -2,8 +2,8 @@ from django.urls import path
 
 from .views import BlogIndexView
 
-app_name = 'blog'
+app_name = "blog"
 
 urlpatterns = [
-    path('', BlogIndexView.as_view(), name='index'),
+    path("", BlogIndexView.as_view(), name="index"),
 ]

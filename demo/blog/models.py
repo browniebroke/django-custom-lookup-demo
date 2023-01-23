@@ -10,8 +10,7 @@ class Post(models.Model):
     )
 
     def is_published(self) -> bool:
-        return (self.published_at is not None
-                and self.published_at < timezone.now())
+        return self.published_at is not None and self.published_at < timezone.now()
 
 
 # New in Django 4.2: custom lookup
@@ -19,7 +18,7 @@ from django.db.models import Lookup
 
 
 class BooleanPastDate(Lookup):
-    lookup_name = 'past'
+    lookup_name = "past"
 
     def __init__(self, lhs, rhs):
         # Save actual right hand side value
@@ -28,7 +27,7 @@ class BooleanPastDate(Lookup):
 
     @property
     def rhs(self):
-        # Replace rhs attribute with current time as the ORM 
+        # Replace rhs attribute with current time as the ORM
         # doesn't like a boolean value passed to a date lookup
         return timezone.now()
 
@@ -41,9 +40,9 @@ class BooleanPastDate(Lookup):
         lhs, lhs_params = self.process_lhs(compiler, connection)
         rhs, rhs_params = self.process_rhs(compiler, connection)
         params = lhs_params + rhs_params
-        direction = '<' if self._real_rhs is True else '>='
+        direction = "<" if self._real_rhs is True else ">="
         print(lhs, rhs, params)
-        return f'%s {direction} %s' % (lhs, rhs), params
+        return f"%s {direction} %s" % (lhs, rhs), params
 
 
-Post._meta.get_field('published_at').register_lookup(BooleanPastDate)
+Post._meta.get_field("published_at").register_lookup(BooleanPastDate)

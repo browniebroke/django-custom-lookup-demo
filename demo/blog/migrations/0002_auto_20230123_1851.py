@@ -6,20 +6,23 @@ from datetime import timedelta
 
 
 def create_posts(apps, schema_editor):
-    Post = apps.get_model('blog', 'Post')
-    Post.objects.create(title='Unpublished post', published_at=None)
-    Post.objects.create(title='Post from 30 days ago',
-                        published_at=timezone.now() - timedelta(days=30))
-    Post.objects.create(title='Post from 10 days ago',
-                        published_at=timezone.now() - timedelta(days=10))
-    Post.objects.create(title='Post in 10 days',
-                        published_at=timezone.now() + timedelta(days=10))
+    Post = apps.get_model("blog", "Post")
+    Post.objects.create(title="Unpublished post", published_at=None)
+    Post.objects.create(
+        title="Post from 30 days ago", published_at=timezone.now() - timedelta(days=30)
+    )
+    Post.objects.create(
+        title="Post from 10 days ago", published_at=timezone.now() - timedelta(days=10)
+    )
+    Post.objects.create(
+        title="Post in 10 days", published_at=timezone.now() + timedelta(days=10)
+    )
 
 
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('blog', '0001_initial'),
+        ("blog", "0001_initial"),
     ]
 
     operations = [
