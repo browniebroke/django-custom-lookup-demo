@@ -21,13 +21,29 @@ from django.db.models import Lookup
 class BooleanPastDate(Lookup):
     lookup_name = 'past'
 
+    def __init__(self, lhs, rhs):
+        # Save actual right hand side value
+        self._real_rhs = rhs
+        super().__init__(lhs, rhs)
+
+    @property
+    def rhs(self):
+        # Replace rhs attribute with current time as the ORM 
+        # doesn't like a boolean value passed to a date lookup
+        return timezone.now()
+
+    @rhs.setter
+    def rhs(self, value):
+        # just a fake setter
+        pass
+
     def as_sql(self, compiler, connection):
         lhs, lhs_params = self.process_lhs(compiler, connection)
         rhs, rhs_params = self.process_rhs(compiler, connection)
         params = lhs_params + rhs_params
-        direction = '<' if rhs is True else '>='
+        direction = '<' if self._real_rhs is True else '>='
         print(lhs, rhs, params)
-        return f'%s {direction} %s' % (lhs, timezone.now().isoformat()), params
+        return f'%s {direction} %s' % (lhs, rhs), params
 
 
 Post._meta.get_field('published_at').register_lookup(BooleanPastDate)
