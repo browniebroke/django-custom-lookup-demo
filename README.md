@@ -1,6 +1,6 @@
 # Django 4.2 Lookup API demo
 
-A small demo to try to play with the Lokup API from Django 4.2. 
+A small demo to try to play with the Lokup API from Django 4.2. See it live [on Replit](https://replit.com/@browniebroke/Lookup-API-demo).
 
 Here are the main elements:
 
